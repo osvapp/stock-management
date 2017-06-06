@@ -24,6 +24,8 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private LoginController loginController;
 
 	/**
 	 * フォームを初期化します.
@@ -53,10 +55,10 @@ public class MemberController {
 	@RequestMapping(value = "create")
 	public String create(@Validated MemberForm form, 
 			Model model) {
-		Member member = new Member();
-		BeanUtils.copyProperties(form, member);
-		memberService.save(member);
-		return "book/list";
+//		Member member = new Member();
+//		BeanUtils.copyProperties(form, member);
+//		memberService.save(member);
+		return loginController.index();
 	}
 	
 }
