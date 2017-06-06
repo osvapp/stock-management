@@ -61,17 +61,25 @@ public class MemberController {
 		}
 		
 		
-		Member member = memberService.findOneByMailAddressAndPassword(form.getMailAddress(), form.getPassword());
-		if(member == null){
-			member = new Member();
-			BeanUtils.copyProperties(form, member);
-			memberService.save(member);
-		}else{
-//			ObjectError error = new ObjectError("createerror", "メールアドレスが使用されています");
-//            result.addError(error);
-			model.addAttribute("message", "メールアドレスが使用されています");
-            return form();
-		}
+			Member member = memberService.findOneByMailAddressAndPassword(form.getMailAddress(), form.getPassword());
+			
+			if(member == null && form.getPassword().equals(form.getPassword2())){
+				
+				member = new Member();
+				BeanUtils.copyProperties(form, member);
+				memberService.save(member);
+				
+			}else if(form.getPassword().equals(form.getPassword2()) == false){
+				
+				model.addAttribute("message", "パスワードが一致しません");
+				return form();
+				
+			}else{
+				model.addAttribute("message", "メールアドレスが使用されています");
+	            return form();
+			}
+		
+		
 		return "redirect:/";
 		
 	}

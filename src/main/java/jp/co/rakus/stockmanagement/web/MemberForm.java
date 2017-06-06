@@ -17,6 +17,8 @@ public class MemberForm {
 	/** パスワード */
 	@NotEmpty(message = "値を入力してください")
 	private String password;
+	@NotEmpty(message = "値を入力してください")
+	private String password2;
 	
 	public String getName() {
 		return name;
@@ -36,4 +38,11 @@ public class MemberForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getPassword2() {
+		return password2;
+	}
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
+	
 }
