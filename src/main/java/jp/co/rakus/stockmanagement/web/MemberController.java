@@ -15,6 +15,7 @@ import jp.co.rakus.stockmanagement.service.MemberService;
 
 /**
  * メンバー関連処理を行うコントローラー.
+ * 
  * @author igamasayuki
  *
  */
@@ -25,11 +26,12 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-//	@Autowired
-//	private LoginController login;
-	
+	// @Autowired
+	// private LoginController login;
+
 	/**
 	 * フォームを初期化します.
+	 * 
 	 * @return フォーム
 	 */
 	@ModelAttribute
@@ -39,49 +41,52 @@ public class MemberController {
 
 	/**
 	 * メンバー情報登録画面を表示します.
+	 * 
 	 * @return メンバー情報登録画面
 	 */
 	@RequestMapping(value = "form")
 	public String form() {
 		return "/member/form";
 	}
-	
+
 	/**
 	 * メンバー情報を登録します.
-	 * @param form フォーム
-	 * @param result リザルト
-	 * @param model モデル
+	 * 
+	 * @param form
+	 *            フォーム
+	 * @param result
+	 *            リザルト
+	 * @param model
+	 *            モデル
 	 * @return ログイン画面
 	 */
 	@RequestMapping(value = "create")
-	public String create(@Validated MemberForm form,BindingResult result,Model model) {
+	public String create(@Validated MemberForm form, BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			return form();
+		}
+
+		Member member = memberService.findOneByMailAddress(form.getMailAddress());
 		
-		if (result.hasErrors()){
+		System.out.println(member);
+		
+		if(member != null) {
+			model.addAttribute("message", "メールアドレスが使用されています");
 			return form();
 		}
 		
+		if(form.getPassword().equals(form.getPassword2()) == false) {
+			model.addAttribute("message", "パスワードが一致しません");
+			return form();
+		} 
 		
-			Member member = memberService.findOneByMailAddressAndPassword(form.getMailAddress(), form.getPassword());
-			
-			if(member == null && form.getPassword().equals(form.getPassword2())){
-				
-				member = new Member();
-				BeanUtils.copyProperties(form, member);
-				memberService.save(member);
-				
-			}else if(form.getPassword().equals(form.getPassword2()) == false){
-				
-				model.addAttribute("message", "パスワードが一致しません");
-				return form();
-				
-			}else{
-				model.addAttribute("message", "メールアドレスが使用されています");
-	            return form();
-			}
-		
-		
+
+		member = new Member();
+		BeanUtils.copyProperties(form, member);
+		memberService.save(member);
 		return "redirect:/";
-		
+
 	}
-	
+
 }
