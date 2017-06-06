@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,10 +60,10 @@ public class MemberController {
 			return form();
 		}
 		
-//		Member member = new Member();
 		
 		Member member = memberService.findOneByMailAddressAndPassword(form.getMailAddress(), form.getPassword());
 		if(member == null){
+			member = new Member();
 			BeanUtils.copyProperties(form, member);
 			memberService.save(member);
 		}else{
