@@ -1,6 +1,7 @@
 package jp.co.rakus.stockmanagement.web;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * メンバー関連のリクエストパラメータが入るフォーム.
@@ -9,15 +10,16 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class MemberForm {
 	/** 名前 */
-	@NotEmpty(message = "値を入力してください")
+	@NotBlank(message = "値を入力してください")
 	private String name;
 	/** メールアドレス */
-	@NotEmpty(message = "値を入力してください")
+	@NotBlank(message = "値を入力してください")
+	@Email(message = "メールアドレス形式で入力してください")
 	private String mailAddress;
 	/** パスワード */
-	@NotEmpty(message = "値を入力してください")
+	@NotBlank(message = "値を入力してください")
 	private String password;
-	@NotEmpty(message = "値を入力してください")
+	@NotBlank(message = "値を入力してください")
 	private String password2;
 	
 	public String getName() {
