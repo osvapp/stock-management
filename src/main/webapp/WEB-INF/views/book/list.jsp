@@ -17,7 +17,8 @@
 			    <td>
 			      <a href="${pageContext.request.contextPath}/book/show/${book.id}"><c:out value="${book.name}" /></a>
 			    </td>
-			    <td><c:out value="${book.stock}"/></td>
+<%-- 			    <td><c:out value="${book.stock}"/></td> --%>
+			    <td><fmt:formatNumber value="${book.stock}" pattern="###,###"/></td>
 			  </tr>
 			  </c:forEach>
 			</table>
