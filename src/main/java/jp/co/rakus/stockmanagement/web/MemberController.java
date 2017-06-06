@@ -25,7 +25,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-
+//	@Autowired
+//	private LoginController login;
+	
 	/**
 	 * フォームを初期化します.
 	 * @return フォーム
@@ -63,7 +65,7 @@ public class MemberController {
 		
 		try{
 			memberService.save(member);
-			return "/";
+			return "redirect:/";
 		}catch (Exception e) {
 //			String messege = "名前かメールアドレスがすでに使用されています。";
 //			model.addAttribute("messege",messege);
