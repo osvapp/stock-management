@@ -38,7 +38,8 @@
 			      価格
 			    </th>
 			    <td>
-			      <c:out value="${book.price}"/>円
+<%-- 			      <c:out value="${book.price}"/>円 --%>
+			      <fmt:formatNumber value="${book.price}" pattern="###,###"/>円
 			    </td>
 			  </tr>
 			  <tr>
@@ -81,7 +82,8 @@
 			    <td>
 			    	<form:errors path="bookForm.*"/>
 					<form action="/book/update" method="post">
-						<input type="text" name="stock"  value="<c:out value="${book.stock}"/>">
+<%-- 						<input type="text" name="stock"  value="<c:out value="${book.stock}"/>"> --%>
+						<input type="text" name="stock"  value="<fmt:formatNumber value="${book.stock}" pattern="###,###"/>">
 						<input type="hidden" name="id" value="<c:out value="${book.id}"/>">
 						<input class="btn" type="submit" value="更新">
 					</form>
