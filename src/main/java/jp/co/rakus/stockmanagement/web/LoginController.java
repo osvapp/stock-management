@@ -1,5 +1,7 @@
 package jp.co.rakus.stockmanagement.web;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +26,8 @@ public class LoginController {
 
 	@Autowired
 	private MemberService memberService;
-
+	@Autowired
+	private HttpSession session;
 	/**
 	 * フォームを初期化します.
 	 * @return フォーム
@@ -65,7 +68,8 @@ public class LoginController {
 			return index();
 		}
 //		model.addAttribute("member", member);
-		redirectAttributes.addFlashAttribute("member", member);
+//		redirectAttributes.addFlashAttribute("member", member);
+		session.setAttribute("member", member);
 		return "redirect:/book/list";
 	}
 }
