@@ -6,10 +6,14 @@
 	<div class="span8">
 		<div class="row">
 		<form:form modelAttribute="memberForm" action="${pageContext.request.contextPath}/member/create">
+		
+		<c:out value="${messege}"/>
+		
 			<table class="table table-striped">
 			  <tr>
 			    <th>
-			     	 氏名
+			     	 氏名<br>
+			     	 <form:errors path="name"/>
 			    </th>
 			    <td>
 			    	<form:input path="name"  placeholder="Name"/>
@@ -17,10 +21,11 @@
 			  </tr>
 			  <tr>
 			    <th>
-			      	メールアドレス
+			      	メールアドレス<br>
+			    	<form:errors path="mailAddress"/>
 			    </th>
 			    <td>
-			    	<form:input path="mailAddress" placeholder="Email"/>
+			      	<form:input path="mailAddress" placeholder="Email"/>
 			    </td>
 			  </tr>
 			  <tr>
