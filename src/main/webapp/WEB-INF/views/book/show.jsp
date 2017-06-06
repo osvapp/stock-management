@@ -89,6 +89,11 @@
 					</form>
 			    </td>
 			  </tr>
+			  <tr>
+			  	<td>
+			  		<a href="${pageContext.request.contextPath}/book/list">戻る</a>
+			  	</td>
+			  </tr>
 			</table>
 		</div>
 	</div>
