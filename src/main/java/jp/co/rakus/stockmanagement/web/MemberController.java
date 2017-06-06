@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,17 +61,20 @@ public class MemberController {
 			return form();
 		}
 		
-		Member member = new Member();
-		BeanUtils.copyProperties(form, member);
+//		Member member = new Member();
 		
-		try{
+		Member member = memberService.findOneByMailAddressAndPassword(form.getMailAddress(), form.getPassword());
+		if(member == null){
+			BeanUtils.copyProperties(form, member);
 			memberService.save(member);
-			return "redirect:/";
-		}catch (Exception e) {
-//			String messege = "名前かメールアドレスがすでに使用されています。";
-//			model.addAttribute("messege",messege);
-			return form();
+		}else{
+//			ObjectError error = new ObjectError("createerror", "メールアドレスが使用されています");
+//            result.addError(error);
+			model.addAttribute("message", "メールアドレスが使用されています");
+            return form();
 		}
+		return "redirect:/";
+		
 	}
 	
 }

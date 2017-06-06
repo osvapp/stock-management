@@ -5,10 +5,11 @@
 	<h3>メンバー登録画面</h3>
 	<div class="span8">
 		<div class="row">
+		<form:errors path="error" />
+		<form:errors path="createerror" />
+		<c:out value="${message}"></c:out>
 		<form:form modelAttribute="memberForm" action="${pageContext.request.contextPath}/member/create">
-		
-		<c:out value="${messege}"/>
-		
+
 			<table class="table table-striped">
 			  <tr>
 			    <th>
