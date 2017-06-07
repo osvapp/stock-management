@@ -2,6 +2,7 @@ package jp.co.rakus.stockmanagement.web;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -23,11 +24,14 @@ import jp.co.rakus.stockmanagement.service.MemberService;
 @RequestMapping("/member")
 @Transactional
 public class MemberController {
-
+	
+	@Autowired
+//	@Qualifier("sha256PasswordEncoder")
+	PasswordEncoder passwordEncoder; 
+//	StandardPasswordEncoder passwordEncoder;
+	
 	@Autowired
 	private MemberService memberService;
-	// @Autowired
-	// private LoginController login;
 
 	/**
 	 * フォームを初期化します.
@@ -69,24 +73,29 @@ public class MemberController {
 
 		Member member = memberService.findOneByMailAddress(form.getMailAddress());
 		
-		System.out.println(member);
-		
 		if(member != null) {
 			model.addAttribute("message", "メールアドレスが使用されています");
 			return form();
 		}
 		
-		if(form.getPassword().equals(form.getPassword2()) == false) {
+		if(!form.getPassword().equals(form.getPassword2())) {
 			model.addAttribute("message", "パスワードが一致しません");
 			return form();
 		} 
 		
-
+		
 		member = new Member();
 		BeanUtils.copyProperties(form, member);
+		
+		System.out.println(member.getPassword());
+		System.out.println(passwordEncoder.encode(member.getPassword()));
+		
+		member.setPassword(passwordEncoder.encode(member.getPassword()));
+		
 		memberService.save(member);
 		return "redirect:/";
 
 	}
 
 }
+

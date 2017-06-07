@@ -3,6 +3,7 @@ package jp.co.rakus.stockmanagement.web;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +24,10 @@ import jp.co.rakus.stockmanagement.service.MemberService;
 @Controller
 @RequestMapping("/")
 public class LoginController {
-
+	
+	@Autowired
+	PasswordEncoder passwordEncoder; 
+	
 	@Autowired
 	private MemberService memberService;
 	@Autowired
@@ -59,10 +63,11 @@ public class LoginController {
 		if (result.hasErrors()){
 			return index();
 		}
+		
 		String mailAddress = form.getMailAddress();
-		String password = form.getPassword();
-		Member member = memberService.findOneByMailAddressAndPassword(mailAddress, password);
-		if (member == null) {
+		Member member = memberService.findOneByMailAddress(mailAddress);
+		
+		if (!passwordEncoder.matches(form.getPassword(),member.getPassword())) {
 			ObjectError error = new ObjectError("loginerror", "メールアドレスまたはパスワードが違います。");
             result.addError(error);
 			return index();
