@@ -3,8 +3,6 @@ package jp.co.rakus.stockmanagement.repository;
 import java.util.Date;
 import java.util.List;
 
-import jp.co.rakus.stockmanagement.domain.Book;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -12,6 +10,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+
+import jp.co.rakus.stockmanagement.domain.Book;
 
 /**
  * booksテーブル操作用のリポジトリクラス.
@@ -34,6 +34,12 @@ public class BookRepository {
 		String image = rs.getString("image");
 		Integer stock = rs.getInt("stock");
 		return new Book(id, name, author, publisher, price, isbncode, saledate, explanation, image, stock);
+	};
+	
+	private static final RowMapper<Integer> BOOK_NUM_ROW_MAPPER = (rs, i) -> {
+		Integer id = rs.getInt("id");
+		
+		return new Integer(id);
 	};
 	
 	@Autowired
@@ -66,4 +72,34 @@ public class BookRepository {
 				param);
 		return book;
 	}
+	
+	synchronized public Book save(Book book) {
+		
+		book.setId(getIdNumber());
+		
+//		System.out.println(book.getId());
+		
+		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
+		
+//		if (book.getId() == null) {
+//			throw new NullPointerException();
+//		} 
+		jdbcTemplate.update(
+				"INSERT INTO books(id,name,author,publisher,price,isbncode,saledate,explanation,image,stock) "
+				+ "VALUES(:id,:name,:author,:publisher,:price,:isbncode,:saledate,:explanation,:image,:stock);",
+				param);
+		
+		return book;
+	}
+	
+	public int getIdNumber(){
+		
+		SqlParameterSource param = new MapSqlParameterSource();
+		Integer number = jdbcTemplate.queryForObject("SELECT Max(id) AS id FROM books",param,BOOK_NUM_ROW_MAPPER);
+		
+//		System.out.println(number);
+		
+		return number+1;
+	}
+	
 }

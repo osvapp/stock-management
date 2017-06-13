@@ -9,3 +9,18 @@ spring:
     view:
         prefix: /WEB-INF/views/
         suffix: .jsp
+    http:
+      multipart:
+        max-file-size: 1MB
+        max-request-size: 10MB
+        
+security:  
+  basic: 
+    enabled: false
+    
+server:
+  context-path: /app
+    
+//    user:
+//      name: moriya
+//      password: moriya

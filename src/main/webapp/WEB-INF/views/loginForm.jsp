@@ -3,7 +3,7 @@
 <body>
 <div class="container">
 	<div class="span8">
-		<img src="img/logo.gif" >
+		<img src="${pageContext.request.contextPath}/img/logo.gif" >
 		<div class="row">
 		<form:errors path="loginForm.*" />
 		<form:form modelAttribute="loginForm" action="${pageContext.request.contextPath}/login">
@@ -34,7 +34,7 @@
 			  </tr>
 			</table>
 		  </form:form>
-		  <a href="/member/form" id="toInsertMember">メンバー登録はこちらから</a>
+		  <a href="${pageContext.request.contextPath}/member/form" id="toInsertMember">メンバー登録はこちらから</a>
 		</div>
 	</div>
 </div>

@@ -9,6 +9,6 @@
 <base href="/">
 <meta charset="UTF-8">
 <title>書籍在庫管理システム</title>
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 </head>

@@ -87,8 +87,8 @@ public class MemberController {
 		member = new Member();
 		BeanUtils.copyProperties(form, member);
 		
-		System.out.println(member.getPassword());
-		System.out.println(passwordEncoder.encode(member.getPassword()));
+//		System.out.println(member.getPassword());
+//		System.out.println(passwordEncoder.encode(member.getPassword()));
 		
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		

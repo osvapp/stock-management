@@ -67,6 +67,14 @@ public class LoginController {
 		String mailAddress = form.getMailAddress();
 		Member member = memberService.findOneByMailAddress(mailAddress);
 		
+		System.out.println(member);
+		
+		if (member == null) {
+			ObjectError error = new ObjectError("loginerror", "メールアドレスまたはパスワードが違います。");
+            result.addError(error);
+			return index();
+		}
+		
 		if (!passwordEncoder.matches(form.getPassword(),member.getPassword())) {
 			ObjectError error = new ObjectError("loginerror", "メールアドレスまたはパスワードが違います。");
             result.addError(error);

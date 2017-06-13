@@ -30,6 +30,8 @@ public class Book {
 	private String image;
 	/** 在庫数 */
 	private Integer stock;
+	
+	
 	public Book() {}
 	public Book(Integer id, String name, String author, String publisher, int price, String isbncode, Date saledate,
 			String explanation, String image, Integer stock) {

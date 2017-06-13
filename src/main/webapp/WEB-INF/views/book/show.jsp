@@ -72,7 +72,7 @@
 			      画像
 			    </th>
 			    <td>
-			      <img src="img/<c:out value="${book.image}"/>"/>
+			      <img src="${pageContext.request.contextPath}/img/<c:out value="${book.image}"/>"/>
 			    </td>
 			  </tr>
 			  <tr>
@@ -81,7 +81,7 @@
 			    </th>
 			    <td>
 			    	<form:errors path="bookForm.*"/>
-					<form action="/book/update" method="post">
+					<form action="${pageContext.request.contextPath}/book/update" method="post">
 <%-- 						<input type="text" name="stock"  value="<c:out value="${book.stock}"/>"> --%>
 						<input type="text" name="stock"  value="<fmt:formatNumber value="${book.stock}" pattern="###,###"/>">
 						<input type="hidden" name="id" value="<c:out value="${book.id}"/>">

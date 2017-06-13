@@ -1,17 +1,10 @@
 package jp.co.rakus.stockmanagement.web;
 
-import java.util.Date;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
-
-/**
- * 書籍関連のリクエストパラメータが入るフォーム.
- * @author igamasayuki
- *
- */
-public class BookForm {
+public class BookSaveForm {
+	
 	/** id  */
-    @NotNull
 	private Integer id;
     /** 書籍名 */
 	private String name;
@@ -24,21 +17,29 @@ public class BookForm {
 	/** ISBNコード */
 	private String isbncode;
 	/** 発売日 */
-	private Date saledate;
+	private String saledate;
 	/** 説明 */
 	private String explanation;
 	/** 画像 */
-	private String image;
+//	private String image;
+//	private Image image;
+	private MultipartFile image;
 	/** 在庫  */
-    @NotNull(message = "値を入力してください")
 	private Integer stock;
+    
+    
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+	public Integer getStock() {
+		return stock;
+	}
+	public void setStock(Integer stock) {
+		this.stock = stock;
+	}
 	public String getName() {
 		return name;
 	}
@@ -69,10 +70,10 @@ public class BookForm {
 	public void setIsbncode(String isbncode) {
 		this.isbncode = isbncode;
 	}
-	public Date getSaledate() {
+	public String getSaledate() {
 		return saledate;
 	}
-	public void setSaledate(Date saledate) {
+	public void setSaledate(String saledate) {
 		this.saledate = saledate;
 	}
 	public String getExplanation() {
@@ -81,16 +82,10 @@ public class BookForm {
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
 	}
-	public String getImage() {
+	public MultipartFile getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(MultipartFile image) {
 		this.image = image;
-	}
-	public Integer getStock() {
-		return stock;
-	}
-	public void setStock(Integer stock) {
-		this.stock = stock;
 	}
 }

@@ -1,4 +1,4 @@
-package jp.co.rakus.stockmanagement.web;
+package jp.co.rakus.stockmanagement;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
