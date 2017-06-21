@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,8 @@ import jp.co.rakus.stockmanagement.service.BookService;
 @Transactional
 public class BookController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
+	
 	@Autowired
 	private BookService bookService;
 	@Autowired
@@ -46,7 +50,7 @@ public class BookController {
 	}
 	@ModelAttribute
 	public BookSaveForm setUpForm2() {
-		System.out.println("BookSaveForm");
+//		System.out.println("BookSaveForm");
 		return new BookSaveForm();
 	}
 	
@@ -57,7 +61,9 @@ public class BookController {
 	 */
 	@RequestMapping(value = "list")
 	public String list(Model model) {
+		logger.debug("書籍の全件検索開始");
 		List<Book> bookList = bookService.findAll();
+		logger.debug("書籍の全件検索完了");
 		model.addAttribute("bookList", bookList);
 		return "book/list";
 	}
@@ -70,7 +76,10 @@ public class BookController {
 	 */
 	@RequestMapping(value = "show/{bookId}")
 	public String show(@PathVariable("bookId") Integer id, Model model) {
+		
+		logger.debug("書籍の1件検索開始");
 		Book book = bookService.findOne(id);
+		logger.debug("書籍の1件検索完了");
 		model.addAttribute("book", book);
 		return "book/show";
 	}
@@ -84,12 +93,15 @@ public class BookController {
 	 */
 	@RequestMapping(value = "update")
 	public String update(@Validated BookForm form, BindingResult result, Model model) {
+		logger.debug("書籍の更新を行います");
 		if (result.hasErrors()) {
+			logger.debug("DBに一致する書籍がありませんでした");
 			return show(form.getId(), model);
 		}
 		Book book = bookService.findOne(form.getId());
 		book.setStock(form.getStock());
 		bookService.update(book);
+		logger.debug("書籍の更新を完了しました");
 		return list(model);
 	}
 	
@@ -98,7 +110,7 @@ public class BookController {
 	public String save(@Validated BookSaveForm form,BindingResult result,Model model){
 //	public String save(@Validated BookForm form,BindingResult result,Model model){
 		
-		System.out.println(444);
+//		System.out.println(444);
 		
 		Book book = new Book();
 		BeanUtils.copyProperties(form, book);
@@ -121,7 +133,7 @@ public class BookController {
 			String filepath = context.getRealPath("/img") + form.getImage().getOriginalFilename();
 			File uploadFile = new File(filepath + form.getImage().getOriginalFilename());
 	        
-			System.out.println(context.getRealPath("/img")+ form.getImage().getOriginalFilename());
+//			System.out.println(context.getRealPath("/img")+ form.getImage().getOriginalFilename());
 			
 //			byte[] bytes = form.getImage().getBytes();
 			
@@ -131,7 +143,7 @@ public class BookController {
 //	        uploadFileStream.write(bytes);
 //	        uploadFileStream.close();
 
-	        System.out.println("画像のアップロード成功");
+//	        System.out.println("画像のアップロード成功");
 			
 	        book.setImage(form.getImage().getOriginalFilename());
 	        
@@ -150,7 +162,7 @@ public class BookController {
 	
 	@RequestMapping("/add")
 	public String add(){
-		System.out.println("add");
+//		System.out.println("add");
 		return "/book/save";
 	}
 

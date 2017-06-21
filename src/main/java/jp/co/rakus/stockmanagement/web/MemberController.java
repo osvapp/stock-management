@@ -68,6 +68,7 @@ public class MemberController {
 	public String create(@Validated MemberForm form, BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
+			
 			return form();
 		}
 

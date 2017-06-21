@@ -2,6 +2,8 @@ package jp.co.rakus.stockmanagement.web;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ import jp.co.rakus.stockmanagement.service.MemberService;
 @RequestMapping("/")
 public class LoginController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	
 	@Autowired
 	PasswordEncoder passwordEncoder; 
 	
@@ -44,9 +48,11 @@ public class LoginController {
 	/**
 	 * ログイン画面を表示します.
 	 * @return ログイン画面
+	 * @throws Exception 
 	 */
 	@RequestMapping("/")
-	public String index() {
+	public String index(){
+		logger.debug("ログインページを表示");
 		return "loginForm";
 	}
 	
@@ -60,22 +66,26 @@ public class LoginController {
 	@RequestMapping(value = "/login")
 	public String login(@Validated LoginForm form,
 			BindingResult result, Model model,RedirectAttributes redirectAttributes) {
+		
 		if (result.hasErrors()){
+			logger.debug("ログインに失敗しました");
 			return index();
 		}
 		
 		String mailAddress = form.getMailAddress();
 		Member member = memberService.findOneByMailAddress(mailAddress);
 		
-		System.out.println(member);
+//		System.out.println(member);
 		
 		if (member == null) {
+			logger.debug("該当するメールアドレスが見つかりません");
 			ObjectError error = new ObjectError("loginerror", "メールアドレスまたはパスワードが違います。");
             result.addError(error);
 			return index();
 		}
 		
 		if (!passwordEncoder.matches(form.getPassword(),member.getPassword())) {
+			logger.debug("パスワードが一致しません");
 			ObjectError error = new ObjectError("loginerror", "メールアドレスまたはパスワードが違います。");
             result.addError(error);
 			return index();
@@ -83,6 +93,7 @@ public class LoginController {
 //		model.addAttribute("member", member);
 //		redirectAttributes.addFlashAttribute("member", member);
 		session.setAttribute("member", member);
+		logger.debug("ログインに成功しました");
 		return "redirect:/book/list";
 	}
 }

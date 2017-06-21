@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="jdbc" level="ON"/>
-    <logger name="jdbc.sqltiming" level="DEBUG"/>
+<!--     <logger name="jdbc" level="ON"/> -->
+<!--     <logger name="jdbc.sqltiming" level="INFO"/> -->
+    
+	<appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+	
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<!-- ERRORだけの場合にメールを送る場合は以下の２行が必要 -->
+			<!-- これが無いとERROR以下のログレベル全てにメールが送られてしまう -->
+			<onMatch>ACCEPT</onMatch><!-- ERRORだった場合はログを出力する -->
+			<onMismatch>DENY</onMismatch><!-- ERROR以外だった場合はログを出力しない -->
+		</filter>
+		
+		<smtpHost>smtp.gmail.com</smtpHost>
+		<smtpPort>465</smtpPort>
+		<SSL>true</SSL>
+		<username>bikkuribox12@gmail.com</username>
+		<password>vffcdmlnlugtxjyj</password>
+
+		<to>bikkuribox12@gmail.com</to>
+		<from>bikkuribox12@gmail.com</from>
+		<subject>Logback SMTPAppender Sample</subject>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>[%-5level][%d{yyyy-MM-dd HH:mm:ss.SSS}] %class - %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="EMAIL" />
+	</root>
+    
 </configuration>

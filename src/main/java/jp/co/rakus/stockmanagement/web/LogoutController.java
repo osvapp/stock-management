@@ -1,11 +1,11 @@
 package jp.co.rakus.stockmanagement.web;
 
-import jp.co.rakus.stockmanagement.domain.Member;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+import jp.co.rakus.stockmanagement.domain.Member;
 
 /**
  * ログアウト関連処理を行うコントローラー.
@@ -27,7 +27,8 @@ public class LogoutController {
 	public String sessionInvalidate(Member member
 			, SessionStatus sessionStatus) {
 		sessionStatus.setComplete();
-		return "redirect:/";
+		throw new RuntimeException("エラーです");
+//		return "redirect:/";
 	}
 
 }
