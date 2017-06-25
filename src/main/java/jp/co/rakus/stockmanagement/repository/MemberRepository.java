@@ -43,8 +43,8 @@ public class MemberRepository {
 		Member member = null;
 		try{
 			member = jdbcTemplate.queryForObject(
-					"SELECT id,name,mail_address,password FROM members WHERE mail_address="
-					+ ":mailAddress and password=:password",
+					"SELECT id,name,mail_address,password "
+					+ "FROM members WHERE mail_address=:mailAddress and password=:password;",
 					param, 
 					MEMBER_ROW_MAPPER);
 			return member;
@@ -52,17 +52,6 @@ public class MemberRepository {
 			e.printStackTrace();
 			return null;
 		}
-//		try{
-//			member = jdbcTemplate.queryForObject(
-//					"SELECT id,name,mail_address,password FROM members WHERE mail_address= '"
-//							+ mailAddress + "' and password='" + password + "'",
-//							param, 
-//							MEMBER_ROW_MAPPER);
-//			return member;
-//		} catch(DataAccessException e) {
-//			e.printStackTrace();
-//			return null;
-//		}
 	}
 
 	/**

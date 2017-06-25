@@ -2,29 +2,29 @@
 <%@ include file="../common/common.jsp"  %>
 <body>
 <div class="container">
-	<c:out value="${member.name}"/>さん　こんにちは！<br>
+	<div><c:out value="${member.name}"/>さん　こんにちは！</div>
 	<a href="${pageContext.request.contextPath}/logout/sessionInvalidate">ログアウト</a>
 	<br>
 	<a href="${pageContext.request.contextPath}/book/add">書籍の追加</a>
 	<h3>書籍一覧</h3>
 	<div class="span8">
 		<div class="row">
+
 			<table class="table table-striped">
+			  
 			  <tr>
 			    <th>書籍</th>
 			    <th>在庫数</th>
 			  </tr>
+			  
 			  <c:forEach var="book" items="${bookList}">
-			  <tr>
-			    <td>
-			      <a href="${pageContext.request.contextPath}/book/show/${book.id}"><c:out value="${book.name}" /></a>
-			    </td>
-<%-- 			    <td><c:out value="${book.stock}"/></td> --%>
-			    <td><fmt:formatNumber value="${book.stock}" pattern="###,###"/></td>
-			  </tr>
+				  <tr>
+				    <td><a href="${pageContext.request.contextPath}/book/show/${book.id}"><c:out value="${book.name}" /></a></td>
+				    <td><fmt:formatNumber value="${book.stock}" pattern="###,###"/></td>
+				  </tr>
 			  </c:forEach>
+			
 			</table>
-
 
 		</div>
 	</div>

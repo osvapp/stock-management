@@ -37,53 +37,50 @@ public class BookRepository {
 	};
 	
 	private static final RowMapper<Integer> BOOK_NUM_ROW_MAPPER = (rs, i) -> {
-		Integer id = rs.getInt("id");
-		
-		return new Integer(id);
+		return new Integer(rs.getInt("id"));
 	};
 	
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
 	public List<Book> findAll() {
+		
 		List<Book> books = jdbcTemplate.query(
 				"SELECT id,name,author,publisher,price,isbncode,saledate,explanation,image,stock FROM books ORDER BY name", 
 				BOOK_ROW_MAPPER);
+		
 		return books;
 	}
 	
 	public Book findOne(Integer id) {
+		
 		SqlParameterSource param = new MapSqlParameterSource()
 				.addValue("id",id);
+		
 		Book book = jdbcTemplate.queryForObject(
 				"SELECT id,name,author,publisher,price,isbncode,saledate,explanation,image,stock FROM books WHERE id=:id", 
-				param, 
-				BOOK_ROW_MAPPER);
+				param, 	BOOK_ROW_MAPPER);
+		
 		return book;
 	}
 	
 	public Book update(Book book) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
-		if (book.getId() == null) {
-			throw new NullPointerException();
-		} 
-		jdbcTemplate.update(
-				"UPDATE books SET stock=:stock WHERE id=:id",
-				param);
+		
+		if (book.getId() == null) {	throw new NullPointerException(); } 
+		
+		jdbcTemplate.update("UPDATE books SET stock=:stock WHERE id=:id",param);
+		
 		return book;
 	}
 	
 	synchronized public Book save(Book book) {
 		
+		//最大のIDを検索してセットする
 		book.setId(getIdNumber());
-		
-//		System.out.println(book.getId());
 		
 		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
 		
-//		if (book.getId() == null) {
-//			throw new NullPointerException();
-//		} 
 		jdbcTemplate.update(
 				"INSERT INTO books(id,name,author,publisher,price,isbncode,saledate,explanation,image,stock) "
 				+ "VALUES(:id,:name,:author,:publisher,:price,:isbncode,:saledate,:explanation,:image,:stock);",
@@ -96,8 +93,6 @@ public class BookRepository {
 		
 		SqlParameterSource param = new MapSqlParameterSource();
 		Integer number = jdbcTemplate.queryForObject("SELECT Max(id) AS id FROM books",param,BOOK_NUM_ROW_MAPPER);
-		
-//		System.out.println(number);
 		
 		return number+1;
 	}

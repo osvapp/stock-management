@@ -22,6 +22,7 @@ public class MemberForm {
 	@NotBlank(message = "値を入力してください")
 	private String password2;
 	
+	//getter　setter
 	public String getName() {
 		return name;
 	}

@@ -10,45 +10,30 @@
 
 			<table class="table table-striped">
 			  <tr>
-			    <th>
-			     	 氏名<br>
-			     	 <form:errors path="name"/>
-			    </th>
-			    <td>
-			    	<form:input path="name"  placeholder="Name"/>
-			    </td>
+			    <th>氏名<br><form:errors path="name"/></th>
+			    <td><form:input path="name"  placeholder="Name"/></td>
 			  </tr>
+			  
 			  <tr>
-			    <th>
-			      	メールアドレス<br>
-			    	<form:errors path="mailAddress"/>
-			    </th>
-			    <td>
-			      	<form:input path="mailAddress" placeholder="Email"/>
-			    </td>
+			    <th>メールアドレス<br><form:errors path="mailAddress"/></th>
+			    <td><form:input path="mailAddress" placeholder="Email"/></td>
 			  </tr>
+			  
 			  <tr>
-			    <th>
-			     	 パスワード
-			    </th>
-			    <td>
-			    	<form:password path="password" placeholder="Password"/>
-			    </td>
+			    <th>パスワード</th>
+			    <td><form:password path="password" placeholder="Password"/></td>
 			  </tr>
+			  
 			  <tr>
-			    <th>
-			     	 パスワード(確認用)
-			    </th>
-			    <td>
-			    	<form:password path="password2" placeholder="Password"/>
-			    </td>
+			    <th>パスワード(確認用)</th>
+			    <td><form:password path="password2" placeholder="Password"/></td>
 			  </tr>
+			  
 			  <tr>
 			  	<td></td>
-			    <td>
-					<input class="btn" type="submit" value="登録">
-			    </td>
+			    <td><input class="btn" type="submit" value="登録"></td>
 			  </tr>
+			  
 			</table>
 		  </form:form>
 		</div>

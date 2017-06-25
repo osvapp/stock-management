@@ -32,6 +32,8 @@ public class BookForm {
 	/** 在庫  */
     @NotNull(message = "値を入力してください")
 	private Integer stock;
+    
+    //getter setter
 	public Integer getId() {
 		return id;
 	}

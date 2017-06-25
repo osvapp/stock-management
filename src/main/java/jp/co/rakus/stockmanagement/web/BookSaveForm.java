@@ -21,13 +21,11 @@ public class BookSaveForm {
 	/** 説明 */
 	private String explanation;
 	/** 画像 */
-//	private String image;
-//	private Image image;
 	private MultipartFile image;
 	/** 在庫  */
 	private Integer stock;
     
-    
+    //getter　setter
 	public Integer getId() {
 		return id;
 	}

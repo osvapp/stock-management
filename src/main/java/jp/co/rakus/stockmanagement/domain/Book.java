@@ -31,7 +31,7 @@ public class Book {
 	/** 在庫数 */
 	private Integer stock;
 	
-	
+	//コンストラクタ
 	public Book() {}
 	public Book(Integer id, String name, String author, String publisher, int price, String isbncode, Date saledate,
 			String explanation, String image, Integer stock) {
@@ -47,6 +47,8 @@ public class Book {
 		this.image = image;
 		this.stock = stock;
 	}
+	
+	//getter setter
 	public Integer getId() {
 		return id;
 	}
