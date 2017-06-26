@@ -13,7 +13,10 @@ public class Member {
 	private String mailAddress;
 	/** パスワード */
 	private String password;
+	
+	//コンストラクタ
 	public Member() {}
+	
 	public Member(Integer id, String name, String mailAddress, String password) {
 		super();
 		this.id = id;
@@ -21,6 +24,8 @@ public class Member {
 		this.mailAddress = mailAddress;
 		this.password = password;
 	}
+	
+	//getter setter
 	public Integer getId() {
 		return id;
 	}

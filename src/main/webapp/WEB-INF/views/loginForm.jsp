@@ -8,29 +8,26 @@
 		<form:errors path="loginForm.*" />
 		<form:form modelAttribute="loginForm" action="${pageContext.request.contextPath}/login">
 			<table class="table table-striped">
+			  
 			  <tr>
-			    <th>
-			    	 メールアドレス
-			    </th>
+			    <th>メールアドレス </th>
 			    <td>
 			    	<form:input path="mailAddress" placeholder="Email"/>
 			    	<form:errors path="mailAddress"/>
 			    </td>
 			  </tr>
+			  
 			  <tr>
-			    <th>
-			      	パスワード
-			    </th>
+			    <th>パスワード</th>
 			    <td>
 			    	<form:password path="password" placeholder="Password"/>
 			    	<form:errors path="password"/>
 			    </td>
 			  </tr>
+			  
 			  <tr>
 			  	<td></td>
-			    <td>
-					<input class="btn" type="submit" value="ログイン">
-			    </td>
+			    <td><input class="btn" type="submit" value="ログイン"></td>
 			  </tr>
 			</table>
 		  </form:form>

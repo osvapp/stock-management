@@ -10,10 +10,9 @@ public class Image implements Serializable{
 
 	private MultipartFile file;
 	
-//	@NotNull
-//	@Size(min = 0, max = 100)
 	private String description;
 	
+	//getter setter
 	public MultipartFile getFile() {
 		return file;
 	}

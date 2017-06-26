@@ -48,9 +48,12 @@ public class BookController {
 	public BookForm setUpForm() {
 		return new BookForm();
 	}
+	/**
+	 * フォームを初期化します
+	 * @return　フォーム
+	 */
 	@ModelAttribute
 	public BookSaveForm setUpForm2() {
-//		System.out.println("BookSaveForm");
 		return new BookSaveForm();
 	}
 	
@@ -76,7 +79,6 @@ public class BookController {
 	 */
 	@RequestMapping(value = "show/{bookId}")
 	public String show(@PathVariable("bookId") Integer id, Model model) {
-		
 		logger.debug("書籍の1件検索開始");
 		Book book = bookService.findOne(id);
 		logger.debug("書籍の1件検索完了");
@@ -94,10 +96,12 @@ public class BookController {
 	@RequestMapping(value = "update")
 	public String update(@Validated BookForm form, BindingResult result, Model model) {
 		logger.debug("書籍の更新を行います");
+		
 		if (result.hasErrors()) {
 			logger.debug("DBに一致する書籍がありませんでした");
 			return show(form.getId(), model);
 		}
+		
 		Book book = bookService.findOne(form.getId());
 		book.setStock(form.getStock());
 		bookService.update(book);
@@ -106,11 +110,15 @@ public class BookController {
 	}
 	
 	
+	/**
+	 * 書籍情報の追加を行います
+	 * @param form　フォーム
+	 * @param result　リザルト
+	 * @param model　モデル
+	 * @return　書籍一覧画面
+	 */
 	@RequestMapping("/save")
 	public String save(@Validated BookSaveForm form,BindingResult result,Model model){
-//	public String save(@Validated BookForm form,BindingResult result,Model model){
-		
-//		System.out.println(444);
 		
 		Book book = new Book();
 		BeanUtils.copyProperties(form, book);
@@ -126,43 +134,26 @@ public class BookController {
 		
 		//画像ファイルの処理
 		try{
-			
-//			String filepath = "C:\\env\\springworkspace\\stock-management-bugfix-spring\\src\\main\\webapp\\img\\";
-//			File uploadFile = new File( filepath + form.getImage().getOriginalFilename() );
-			
 			String filepath = context.getRealPath("/img") + form.getImage().getOriginalFilename();
 			File uploadFile = new File(filepath + form.getImage().getOriginalFilename());
 	        
-//			System.out.println(context.getRealPath("/img")+ form.getImage().getOriginalFilename());
-			
-//			byte[] bytes = form.getImage().getBytes();
-			
 			form.getImage().transferTo(uploadFile);
-			
-//	        BufferedOutputStream uploadFileStream = new BufferedOutputStream(new FileOutputStream(uploadFile));
-//	        uploadFileStream.write(bytes);
-//	        uploadFileStream.close();
-
-//	        System.out.println("画像のアップロード成功");
 			
 	        book.setImage(form.getImage().getOriginalFilename());
 	        
 	        //セーブ
 	        bookService.save(book);
-	        System.out.println("セーブ完了");
 			 
 		}catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 			return list(model);
 		}
-			
 		return list(model);
 	}
 	
 	
 	@RequestMapping("/add")
 	public String add(){
-//		System.out.println("add");
 		return "/book/save";
 	}
 

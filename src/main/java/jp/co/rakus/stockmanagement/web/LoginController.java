@@ -31,11 +31,11 @@ public class LoginController {
 	
 	@Autowired
 	PasswordEncoder passwordEncoder; 
-	
 	@Autowired
 	private MemberService memberService;
 	@Autowired
 	private HttpSession session;
+	
 	/**
 	 * フォームを初期化します.
 	 * @return フォーム
@@ -72,10 +72,7 @@ public class LoginController {
 			return index();
 		}
 		
-		String mailAddress = form.getMailAddress();
-		Member member = memberService.findOneByMailAddress(mailAddress);
-		
-//		System.out.println(member);
+		Member member = memberService.findOneByMailAddress(form.getMailAddress());
 		
 		if (member == null) {
 			logger.debug("該当するメールアドレスが見つかりません");
@@ -90,8 +87,7 @@ public class LoginController {
             result.addError(error);
 			return index();
 		}
-//		model.addAttribute("member", member);
-//		redirectAttributes.addFlashAttribute("member", member);
+		
 		session.setAttribute("member", member);
 		logger.debug("ログインに成功しました");
 		return "redirect:/book/list";

@@ -24,11 +24,9 @@ public class LogoutController {
 	 * @return　ログイン画面
 	 */
 	@RequestMapping(value = "sessionInvalidate")
-	public String sessionInvalidate(Member member
-			, SessionStatus sessionStatus) {
+	public String sessionInvalidate(Member member, SessionStatus sessionStatus) {
 		sessionStatus.setComplete();
-		throw new RuntimeException("エラーです");
-//		return "redirect:/";
+		return "redirect:/";
 	}
 
 }

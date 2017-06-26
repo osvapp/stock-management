@@ -40,7 +40,6 @@
 				</tr>
 				<tr>
 					<th>画像</th>
-<%-- 					<td><form:input path="image" type="file" /></td> --%>
 					<td><input name="image" type="file" /></td>
 					
 				</tr>

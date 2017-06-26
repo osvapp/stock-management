@@ -17,14 +17,6 @@ public class MemberService {
 	@Autowired
 	MemberRepository memberRepository;
 	
-//	public List<Member> findAll(){
-//		return memberRepository.findAll();
-//	}
-//	
-//	public Member findOne(Integer id) {
-//		return memberRepository.findOne(id);
-//	}
-	
 	public Member findOneByMailAddressAndPassword(String mailAddress, String password){
 		return memberRepository.findByMailAddressAndPassword(mailAddress, password);
 	}
@@ -37,11 +29,4 @@ public class MemberService {
 		return memberRepository.save(member);
 	}
 	
-//	public Member update(Member member){
-//		return memberRepository.save(member);
-//	}
-//	
-//	public void delete(Integer id){
-//		memberRepository.delete(id);
-//	}
 }

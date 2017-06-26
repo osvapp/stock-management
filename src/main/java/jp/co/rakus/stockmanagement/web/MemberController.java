@@ -26,9 +26,7 @@ import jp.co.rakus.stockmanagement.service.MemberService;
 public class MemberController {
 	
 	@Autowired
-//	@Qualifier("sha256PasswordEncoder")
 	PasswordEncoder passwordEncoder; 
-//	StandardPasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private MemberService memberService;
@@ -67,10 +65,7 @@ public class MemberController {
 	@RequestMapping(value = "create")
 	public String create(@Validated MemberForm form, BindingResult result, Model model) {
 
-		if (result.hasErrors()) {
-			
-			return form();
-		}
+		if (result.hasErrors()) {return form();}
 
 		Member member = memberService.findOneByMailAddress(form.getMailAddress());
 		
@@ -84,12 +79,8 @@ public class MemberController {
 			return form();
 		} 
 		
-		
 		member = new Member();
 		BeanUtils.copyProperties(form, member);
-		
-//		System.out.println(member.getPassword());
-//		System.out.println(passwordEncoder.encode(member.getPassword()));
 		
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		
